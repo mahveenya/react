@@ -1,0 +1,7 @@
+.item {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #1a1a1a;
+}
