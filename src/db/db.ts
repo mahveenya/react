@@ -1,14 +1,4 @@
-import type { Track } from '../types/types';
-
-class Db {
-  _tracks: Track[] = [];
-
-  getTracks() {
-    return this._tracks;
-  }
-  saveTracks(tracks: Track[]) {
-    this._tracks = tracks;
-  }
+class Ls {
   getLastSearch() {
     return localStorage.getItem('lastSearch')?.trim();
   }
@@ -17,4 +7,4 @@ class Db {
   }
 }
 
-export default new Db();
+export default new Ls();

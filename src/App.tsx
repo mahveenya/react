@@ -21,14 +21,23 @@ export default class App extends Component {
 
   handleSearch = async (query: string) => {
     const response = await api.search(query);
-    this.setState({ tracks: response });
+    this.setState({ tracks: response, query });
   };
 
   render() {
-    return (
+    const hasTracks =
+      Array.isArray(this.state.tracks) && this.state.tracks.length > 0;
+    return hasTracks ? (
       <>
         <SearchBar onSearch={this.handleSearch} />
         <Tracks tracks={this.state.tracks} />
+      </>
+    ) : (
+      <>
+        <SearchBar onSearch={this.handleSearch} />
+        <div>
+          Nothing to show for &quot;{this.state.query}&quot;, try another word
+        </div>
       </>
     );
   }

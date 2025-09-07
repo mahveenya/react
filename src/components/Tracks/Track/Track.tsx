@@ -11,10 +11,10 @@ interface Props {
 export default class Track extends Component<Props> {
   render() {
     return (
-      <section className={styles.track}>
+      <div className={styles.track}>
         <TrackProps track={this.props.track} />
         <TrackLyrics trackLyrics={this.props.track.plainLyrics} />
-      </section>
+      </div>
     );
   }
 }
