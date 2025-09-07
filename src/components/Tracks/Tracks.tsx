@@ -4,17 +4,23 @@ import Track from './Track/Track';
 import type { Track as ITrack } from '~types/types';
 
 export interface Props {
+  query: string;
   tracks: ITrack[];
 }
 
 export default class Tracks extends Component<Props> {
   render() {
-    return (
+    const { tracks, query } = this.props;
+    const hasTracks = Array.isArray(tracks) && tracks.length > 0;
+
+    return hasTracks ? (
       <section className={styles.tracks}>
-        {this.props.tracks.map((track) => (
+        {tracks.map((track) => (
           <Track key={track.id} track={track} />
         ))}
       </section>
+    ) : (
+      <div>Nothing to show for &quot;{query}&quot;, try another word</div>
     );
   }
 }
