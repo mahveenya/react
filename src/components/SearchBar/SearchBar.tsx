@@ -3,7 +3,7 @@ import type { FormEvent } from 'react';
 import SearchInput from './SearchInput/SearchInput';
 import SearchButton from './SearchButton/SearchButton';
 import styles from './SearchBar.module.css';
-import db from '../../db/db';
+import ls from '../../db/storage';
 
 interface Props {
   onSearch: (query: string) => void;
@@ -17,7 +17,7 @@ export default class SearchBar extends Component<Props> {
     const query = formData.get('q')?.toString().trim();
     if (!query) return;
 
-    db.setLastSearch(query);
+    ls.setLastSearch(query);
     this.props.onSearch(query);
   };
   render() {

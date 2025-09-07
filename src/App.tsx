@@ -3,12 +3,12 @@ import './App.css';
 import SearchBar from '~components/SearchBar/SearchBar';
 import Tracks from '~components/Tracks/Tracks';
 import api from '~api/api';
-import db from './db/db';
+import ls from './db/storage';
 
 export default class App extends Component {
   state = {
     tracks: [],
-    query: db.getLastSearch() || '',
+    query: ls.getLastSearch() || '',
     loading: false,
   };
 

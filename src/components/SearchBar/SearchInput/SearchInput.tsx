@@ -1,10 +1,10 @@
 import { Component, type ChangeEvent } from 'react';
 import styles from './SearchInput.module.css';
-import db from '../../../db/db';
+import ls from '../../../db/storage';
 
 export default class SearchInput extends Component {
   state = {
-    query: db.getLastSearch() || '',
+    query: ls.getLastSearch() || '',
   };
 
   private handleChange = (event: ChangeEvent<HTMLInputElement>) => {
