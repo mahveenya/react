@@ -1,6 +1,8 @@
+import { BASE_URL } from '../constants/constants';
+
 class Api {
   async search(query: string) {
-    const request = new Request(`api/search?q=${query}`);
+    const request = new Request(`${BASE_URL}/search?q=${query}`);
     return await this.makeRequest(request);
   }
 
