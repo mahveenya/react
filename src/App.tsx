@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import './App.css';
-import SearchBar from './components/SearchBar/SearchBar';
-import Results from './components/Results/Results';
-import api from './api/api';
+import SearchBar from '~components/SearchBar/SearchBar';
+import Tracks from '~components/Tracks/Tracks';
+import api from '~api/api';
 import db from './db/db';
 
 export default class App extends Component {
@@ -12,14 +12,10 @@ export default class App extends Component {
   };
 
   componentDidMount(): void {
-    console.log('Results mounted');
-
     if (this.state.query) {
-      const response = this.handleSearch(this.state.query);
-      console.log('Results:', response);
+      this.handleSearch(this.state.query);
     } else {
-      const response = this.handleSearch('chic');
-      console.log('Results:', response);
+      this.handleSearch('kung fu fighting');
     }
   }
 
@@ -32,7 +28,7 @@ export default class App extends Component {
     return (
       <>
         <SearchBar onSearch={this.handleSearch} />
-        <Results tracks={this.state.tracks} />
+        <Tracks tracks={this.state.tracks} />
       </>
     );
   }

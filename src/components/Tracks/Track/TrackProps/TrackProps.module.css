@@ -1,0 +1,7 @@
+.trackProps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border-right: 1px solid #ccc;
+}

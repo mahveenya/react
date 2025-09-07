@@ -1,5 +1,9 @@
-import { Component } from 'react';
-import type { Props } from './types';
+import { Component, type ReactNode } from 'react';
+
+interface Props {
+  children?: ReactNode;
+  type?: 'button' | 'submit' | 'reset';
+}
 
 export default class Button extends Component<Props> {
   render() {

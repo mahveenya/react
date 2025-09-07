@@ -4,7 +4,7 @@ import db from '../../../db/db';
 
 export default class SearchInput extends Component {
   state = {
-    query: db.getLastSearch(),
+    query: db.getLastSearch() || '',
   };
 
   private handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +15,7 @@ export default class SearchInput extends Component {
       <input
         type="search"
         name="q"
-        placeholder="Search by track, artist, album..."
+        placeholder="Search lyrics by track, artist, album..."
         className={styles.searchInput}
         value={this.state.query}
         onChange={this.handleChange}

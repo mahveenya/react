@@ -4,7 +4,10 @@ import SearchInput from './SearchInput/SearchInput';
 import SearchButton from './SearchButton/SearchButton';
 import styles from './SearchBar.module.css';
 import db from '../../db/db';
-import type { Props } from './types';
+
+interface Props {
+  onSearch: (query: string) => void;
+}
 
 export default class SearchBar extends Component<Props> {
   private handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -16,7 +19,6 @@ export default class SearchBar extends Component<Props> {
 
     db.setLastSearch(query);
     this.props.onSearch(query);
-    console.log('Results:', db.getTracks());
   };
   render() {
     return (
