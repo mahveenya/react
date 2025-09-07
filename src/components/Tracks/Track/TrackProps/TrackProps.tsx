@@ -8,7 +8,12 @@ interface Props {
   track: Track;
 }
 
-const defaultTrackProps = new Set(['albumName', 'artistName', 'trackName']);
+const defaultTrackProps = new Set([
+  'albumName',
+  'artistName',
+  'trackName',
+  'instrumental',
+]);
 
 export default class TrackProps extends Component<Props> {
   render() {
