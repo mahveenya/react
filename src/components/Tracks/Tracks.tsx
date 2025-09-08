@@ -2,6 +2,7 @@ import { Component } from 'react';
 import styles from './Tracks.module.css';
 import Track from './Track/Track';
 import type { Track as ITrack } from '~types/types';
+import NothingToShow from '../NothingToShow/NothingToShow';
 
 export interface Props {
   query: string;
@@ -20,7 +21,7 @@ export default class Tracks extends Component<Props> {
         ))}
       </section>
     ) : (
-      <div>Nothing to show for &quot;{query}&quot;, try another word</div>
+      <NothingToShow query={query} />
     );
   }
 }
