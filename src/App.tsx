@@ -4,6 +4,7 @@ import SearchBar from '~components/SearchBar/SearchBar';
 import Tracks from '~components/Tracks/Tracks';
 import api from '~api/api';
 import ls from './db/storage';
+import Loader from './components/Loader/Loader';
 
 export default class App extends Component {
   state = {
@@ -31,7 +32,7 @@ export default class App extends Component {
       <>
         <SearchBar onSearch={this.handleSearch} />
         {this.state.loading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           <Tracks tracks={this.state.tracks} query={this.state.query} />
         )}
