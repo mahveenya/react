@@ -8,24 +8,21 @@ interface Props {
   track: Track;
 }
 
-const defaultTrackProps = new Set([
-  'albumName',
-  'artistName',
-  'trackName',
-  'instrumental',
-]);
+const defaultTrackProps = new Set(['albumName', 'artistName', 'trackName']);
 
 export default class TrackProps extends Component<Props> {
   render() {
     const { track } = this.props;
     const trackEntries = Object.entries(track) as Entries<Track>;
+    const filteredTrackEntries = trackEntries.filter(([trackPropName]) => {
+      return defaultTrackProps.has(trackPropName);
+    });
 
     return (
       <div className={styles.trackProps}>
         {track &&
-          trackEntries.map(
+          filteredTrackEntries.map(
             ([propName, propValue]: [keyof Track, Track[keyof Track]]) => {
-              if (!defaultTrackProps.has(propName)) return null;
               return (
                 <TrackProp
                   key={`${propName}-${track.id}`}

@@ -13,12 +13,13 @@ export default class Tracks extends Component<Props> {
   render() {
     const { tracks, query } = this.props;
     const hasTracks = Array.isArray(tracks) && tracks.length > 0;
+    const filteredTracks = tracks.filter((track) => !track.instrumental);
 
     return hasTracks ? (
       <section className={styles.tracks}>
-        {tracks.map((track) => (
-          <Track key={track.id} track={track} />
-        ))}
+        {filteredTracks.map((track) => {
+          return <Track key={track.id} track={track} />;
+        })}
       </section>
     ) : (
       <NothingToShow query={query} />

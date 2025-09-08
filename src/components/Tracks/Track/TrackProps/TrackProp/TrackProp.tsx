@@ -19,25 +19,15 @@ export default class TrackProp extends Component<Props> {
 
   render() {
     const { trackPropName, trackPropValue } = this.props;
-    if (typeof trackPropValue !== 'boolean') {
-      return (
+    return (
+      trackPropValue && (
         <div>
           <span className={styles.trackPropName}>
             {this.normalizePropName(trackPropName)}:{' '}
           </span>
           <span>{trackPropValue}</span>
         </div>
-      );
-    } else {
-      return (
-        trackPropValue && (
-          <div>
-            <span className={styles.trackPropSingleName}>
-              {this.normalizePropName(trackPropName)}
-            </span>
-          </div>
-        )
-      );
-    }
+      )
+    );
   }
 }
