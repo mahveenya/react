@@ -21,7 +21,7 @@ export default class TrackProp extends Component<Props> {
     const { trackPropName, trackPropValue } = this.props;
     return (
       trackPropValue && (
-        <div>
+        <div className={styles.trackProp}>
           <span className={styles.trackPropName}>
             {this.normalizePropName(trackPropName)}:{' '}
           </span>

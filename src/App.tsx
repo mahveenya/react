@@ -17,7 +17,7 @@ export default class App extends Component {
     if (this.state.query) {
       this.handleSearch(this.state.query);
     } else {
-      this.handleSearch('kung fu fighting');
+      this.handleSearch('a');
     }
   }
 

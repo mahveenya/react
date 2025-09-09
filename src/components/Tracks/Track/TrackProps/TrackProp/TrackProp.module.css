@@ -8,3 +8,7 @@
   composes: trackPropName;
   color: orange;
 }
+
+.trackProp:nth-child(2) {
+  margin-block: 1em;
+}

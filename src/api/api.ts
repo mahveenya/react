@@ -1,3 +1,4 @@
+import db from '~/db/db';
 import { BASE_URL } from '../constants/constants';
 
 class Api {
@@ -9,7 +10,9 @@ class Api {
   private async makeRequest(request: Request) {
     try {
       const response = await fetch(request);
-      return await response.json();
+      const responseJson = await response.json();
+      db.saveTracks(responseJson);
+      return await responseJson;
     } catch (error) {
       throw new Error('Error occured during fetch', { cause: error });
     }

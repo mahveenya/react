@@ -8,12 +8,32 @@ interface Props {
   track: ITrack;
 }
 
-export default class Track extends Component<Props> {
+interface State {
+  isExpanded: boolean;
+  collapsedHeight: number;
+}
+
+export default class Track extends Component<Props, State> {
+  state = {
+    isExpanded: false,
+    collapsedHeight: 100,
+  };
+
+  toggleExpand = () => {
+    this.setState((prevState) => ({
+      isExpanded: !prevState.isExpanded,
+    }));
+  };
+
   render() {
     return (
-      <div className={styles.track}>
+      <div className={styles.track} onClick={this.toggleExpand}>
         <TrackProps track={this.props.track} />
-        <TrackLyrics trackLyrics={this.props.track.plainLyrics} />
+        <TrackLyrics
+          trackLyrics={this.props.track.plainLyrics}
+          trackId={this.props.track.id}
+          isExpanded={this.state.isExpanded}
+        />
       </div>
     );
   }
