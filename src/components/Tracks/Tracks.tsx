@@ -3,6 +3,7 @@ import styles from './Tracks.module.css';
 import Track from './Track/Track';
 import type { Track as ITrack } from '~types/types';
 import NothingToShow from '../NothingToShow/NothingToShow';
+import ErrorTrigger from '../ErrorTrigger/ErrorTrigger';
 
 export interface Props {
   query: string;
@@ -15,14 +16,19 @@ export default class Tracks extends Component<Props> {
     const hasTracks = Array.isArray(tracks) && tracks.length > 0;
     const filteredTracks = tracks.filter((track) => !track.instrumental);
 
-    return hasTracks ? (
-      <section className={styles.tracks}>
-        {filteredTracks.map((track) => {
-          return <Track key={track.id} track={track} />;
-        })}
-      </section>
-    ) : (
-      <NothingToShow query={query} />
+    return (
+      <>
+        {hasTracks ? (
+          <section className={styles.tracks}>
+            {filteredTracks.map((track) => {
+              return <Track key={track.id} track={track} />;
+            })}
+          </section>
+        ) : (
+          <NothingToShow query={query} />
+        )}
+        <ErrorTrigger />
+      </>
     );
   }
 }

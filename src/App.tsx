@@ -5,6 +5,7 @@ import Tracks from '~components/Tracks/Tracks';
 import api from '~api/api';
 import ls from './db/storage';
 import Loader from './components/Loader/Loader';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 export default class App extends Component {
   state = {
@@ -34,7 +35,9 @@ export default class App extends Component {
         {this.state.loading ? (
           <Loader />
         ) : (
-          <Tracks tracks={this.state.tracks} query={this.state.query} />
+          <ErrorBoundary>
+            <Tracks tracks={this.state.tracks} query={this.state.query} />
+          </ErrorBoundary>
         )}
       </>
     );
