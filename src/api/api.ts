@@ -1,20 +1,117 @@
-import db from '~/db/db';
-import { BASE_URL } from '../constants/constants';
+import type {
+  PokemonListResponse,
+  Pokemon,
+  NamedAPIResource,
+  Ability,
+  AbilityInfo,
+} from '~/types/types';
+import { API } from './endpoints';
+import {
+  isAbility,
+  isPokemon,
+  isPokemonListResponse,
+} from '~/utils/validators';
+import type { Validator } from '~/types/helper.types';
+
+class FetchError extends Error {
+  status: number;
+  statusText: string;
+  body: unknown;
+  request: Request;
+
+  constructor(
+    message: string,
+    options: {
+      status: number;
+      statusText: string;
+      body: unknown;
+      request: Request;
+    }
+  ) {
+    super(message);
+    this.name = 'FetchError';
+    this.status = options.status;
+    this.statusText = options.statusText;
+    this.body = options.body;
+    this.request = options.request;
+  }
+}
 
 class Api {
-  async search(query: string) {
-    const request = new Request(`${BASE_URL}/search?q=${query}`);
-    return await this.makeRequest(request);
-  }
-
   private async makeRequest(request: Request) {
     try {
       const response = await fetch(request);
+
+      if (response.status >= 400) {
+        const errorBody = await this.safeParseJson(response);
+        throw new FetchError('Request failed', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorBody,
+          request,
+        });
+      }
+
       const responseJson = await response.json();
-      db.saveTracks(responseJson);
-      return await responseJson;
+      return responseJson;
     } catch (error) {
-      throw new Error('Error occured during fetch', { cause: error });
+      if (error instanceof FetchError) {
+        throw error;
+      }
+
+      throw new Error('Unexpected error during fetch', { cause: error });
+    }
+  }
+
+  private async getPokemonListResponse(
+    limit: number = 20,
+    offset: number = 0
+  ): Promise<PokemonListResponse> {
+    return this.get(API.POKEMON_LIST(limit, offset), isPokemonListResponse);
+  }
+
+  async getPokemon(nameOrId: string): Promise<Pokemon> {
+    if (!nameOrId) throw new Error('Provide pokemon name or id');
+    return await this.get(API.POKEMON(nameOrId), isPokemon);
+  }
+
+  async getPokemons(): Promise<Pokemon[]> {
+    const pokemonAPIResource = (await this.getPokemonListResponse()).results;
+    return await this.loadUrls(pokemonAPIResource, isPokemon);
+  }
+
+  async getAbilities(abilities: AbilityInfo[]): Promise<Ability[]> {
+    const abilityAPIResource = abilities.map(
+      (abilityInfo: AbilityInfo) => abilityInfo.ability
+    );
+    return await this.loadUrls(abilityAPIResource, isAbility);
+  }
+
+  async loadUrls<T>(apiResource: NamedAPIResource[], validator?: Validator<T>) {
+    return await Promise.all(
+      apiResource.map(({ url }) => this.get(url, validator))
+    );
+  }
+
+  private async get<T>(endpoint: string, validator?: Validator<T>): Promise<T> {
+    const url = new URL(`${endpoint}`);
+    const request = new Request(url);
+    const response = await this.makeRequest(request);
+
+    if (validator && !validator(response)) {
+      throw new Error(
+        `Invalid response shape of response object for ${endpoint}`
+      );
+    }
+
+    return response;
+  }
+
+  private async safeParseJson(response: Response) {
+    try {
+      return await response.json();
+    } catch {
+      return null;
     }
   }
 }

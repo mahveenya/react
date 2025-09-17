@@ -1,31 +1,22 @@
-import type { Track } from '~types/types';
+import type { Pokemon } from '~types/types';
 
 class Db {
-  db: Track[] = [];
+  db: Pokemon[] = [];
 
-  saveTracks(tracks: Track[]) {
-    this.db = tracks;
-  }
-
-  getTrackById(trackId: Track['id']): Track {
-    const track = this.db.find((track) => track.id === trackId);
-    if (!track) {
-      throw new Error(`Track with id ${trackId} not found`);
+  saveResponse(response: Pokemon[]) {
+    if (Array.isArray(response)) {
+      this.db = response;
+    } else {
+      this.db = [response];
     }
-    return track;
   }
 
-  getLyricsById(trackId: Track['id']): Track['plainLyrics'] {
-    return this.getTrackById(trackId).plainLyrics;
-  }
-
-  getFirstBar(trackId: number): string {
-    const lyrics = this.getLyricsById(trackId);
-    const lines = lyrics.split('\n');
-    if (lines.length < 5) {
-      return lyrics;
+  getPokemonById(pokemonId: Pokemon['id']): Pokemon {
+    const pokemon = this.db.find((pokemon) => pokemon.id === pokemonId);
+    if (!pokemon) {
+      throw new Error(`Pokemon with id ${pokemonId} not found`);
     }
-    return lines.slice(0, 4).join('\n') + '...';
+    return pokemon;
   }
 }
 export default new Db();

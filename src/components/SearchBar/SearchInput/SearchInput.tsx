@@ -15,7 +15,9 @@ export default class SearchInput extends Component {
       <input
         type="search"
         name="q"
-        placeholder="Search lyrics by track, artist, album..."
+        pattern="[A-Za-z]+"
+        title="Only letters allowed"
+        placeholder="Search pokemons by name..."
         className={styles.searchInput}
         value={this.state.query}
         onChange={this.handleChange}

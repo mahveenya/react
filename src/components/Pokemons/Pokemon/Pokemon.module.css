@@ -1,14 +1,17 @@
-.track {
+.pokemon {
   display: grid;
   grid-template-columns: 1fr 2fr;
   padding: 1.5em;
   border-radius: 0.5em;
   border: 1px solid transparent;
   background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
 
-  &:hover {
-    border-color: #646cff;
+  &::selection {
+    color: black;
+    background-color: aquamarine;
   }
+}
+.pokemonName {
+  color: aquamarine;
+  text-transform: capitalize;
 }

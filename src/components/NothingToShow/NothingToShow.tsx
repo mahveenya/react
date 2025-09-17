@@ -13,7 +13,7 @@ export default class NothingToShow extends Component<Props> {
       <section className={styles.nothingToShow}>
         Nothing to show for <mark>{query}</mark>
         <br />
-        Try another artist, track name or album
+        Try another pokemon name
       </section>
     );
   }

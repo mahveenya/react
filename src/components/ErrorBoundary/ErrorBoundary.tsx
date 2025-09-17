@@ -1,4 +1,4 @@
-import { type ReactNode, Component } from 'react';
+import { type ErrorInfo, type ReactNode, Component } from 'react';
 import styles from './ErrorBoundary.module.css';
 
 interface Props {
@@ -12,11 +12,15 @@ export default class ErrorBoundary extends Component<Props> {
     return { hasError: true };
   }
 
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    console.error('Error Boundary caught an error', error, errorInfo);
+  }
+
   render() {
     if (this.state.hasError) {
       return (
         <div className={styles.errorBoundary}>
-          <h1>Something went wrong.</h1>;
+          <h1>Something went wrong.</h1>
         </div>
       );
     }

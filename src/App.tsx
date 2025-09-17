@@ -1,31 +1,72 @@
 import { Component } from 'react';
 import './App.css';
 import SearchBar from '~components/SearchBar/SearchBar';
-import Tracks from '~components/Tracks/Tracks';
+import Pokemons from '~components/Pokemons/Pokemons';
 import api from '~api/api';
 import ls from './db/storage';
 import Loader from './components/Loader/Loader';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import type { Pokemon } from './types/types';
+import { isPokemon } from './utils/validators';
 
-export default class App extends Component {
-  state = {
-    tracks: [],
-    query: ls.getLastSearch() || '',
+type State = {
+  pokemons: Pokemon[];
+  query: string;
+  loading: boolean;
+  error: string | null;
+};
+
+export default class App extends Component<State> {
+  state: State = {
+    pokemons: [],
+    query: ls.getLastSearch()?.trim() || '',
     loading: false,
+    error: null,
   };
 
-  componentDidMount(): void {
+  componentDidMount() {
     if (this.state.query) {
       this.handleSearch(this.state.query);
     } else {
-      this.handleSearch('a');
+      this.getPokemons();
     }
   }
 
-  handleSearch = async (query: string) => {
-    this.setState({ loading: true });
-    const response = await api.search(query);
-    this.setState({ tracks: response, query, loading: false });
+  private fetchData = async <T,>(fetchFn: () => Promise<T>, query?: string) => {
+    this.setState({ loading: true, error: null });
+
+    try {
+      const response = await fetchFn();
+      if (isPokemon(response)) {
+        this.setState({ pokemons: [response], loading: false });
+      } else {
+        this.setState({ pokemons: response, loading: false });
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
+
+      this.setState({
+        pokemons: [],
+        query: query ?? this.state.query,
+        loading: false,
+        error: errorMessage,
+      });
+    }
+  };
+
+  handleSearch = (query: string) => {
+    this.fetchData(
+      () => {
+        return api.getPokemon(query);
+      },
+
+      query
+    );
+  };
+
+  getPokemons = () => {
+    this.fetchData(() => api.getPokemons());
   };
 
   render() {
@@ -36,7 +77,11 @@ export default class App extends Component {
           <Loader />
         ) : (
           <ErrorBoundary>
-            <Tracks tracks={this.state.tracks} query={this.state.query} />
+            <Pokemons
+              pokemons={this.state.pokemons}
+              query={this.state.query}
+              error={this.state.error}
+            />
           </ErrorBoundary>
         )}
       </>
