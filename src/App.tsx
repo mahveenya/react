@@ -19,17 +19,13 @@ type State = {
 export default class App extends Component<State> {
   state: State = {
     pokemons: [],
-    query: ls.getLastSearch()?.trim() || '',
+    query: ls.getLastSearch() || '',
     loading: false,
     error: null,
   };
 
   componentDidMount() {
-    if (this.state.query) {
-      this.handleSearch(this.state.query);
-    } else {
-      this.getPokemons();
-    }
+    this.handleSearch(this.state.query);
   }
 
   private fetchData = async <T,>(fetchFn: () => Promise<T>, query?: string) => {
@@ -55,18 +51,18 @@ export default class App extends Component<State> {
     }
   };
 
-  handleSearch = (query: string) => {
-    this.fetchData(
-      () => {
-        return api.getPokemon(query);
-      },
+  handleSearch = (query?: string) => {
+    if (query) {
+      return this.fetchData(
+        () => {
+          return api.getPokemon(query);
+        },
 
-      query
-    );
-  };
+        query
+      );
+    }
 
-  getPokemons = () => {
-    this.fetchData(() => api.getPokemons());
+    return this.fetchData(() => api.getPokemons());
   };
 
   render() {

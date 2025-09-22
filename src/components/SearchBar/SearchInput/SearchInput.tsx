@@ -4,7 +4,7 @@ import ls from '../../../db/storage';
 
 export default class SearchInput extends Component {
   state = {
-    query: ls.getLastSearch() || '',
+    query: ls.getLastSearch()?.trim() || '',
   };
 
   private handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -15,8 +15,6 @@ export default class SearchInput extends Component {
       <input
         type="search"
         name="q"
-        pattern="[A-Za-z]+"
-        title="Only letters allowed"
         placeholder="Search pokemons by name..."
         className={styles.searchInput}
         value={this.state.query}
