@@ -10,7 +10,7 @@ import {
   isAbility,
   isPokemon,
   isPokemonListResponse,
-} from '~/utils/validators';
+} from '~/utils/typeguards';
 import type { Validator } from '~/types/helper.types';
 
 export class FetchError extends Error {
