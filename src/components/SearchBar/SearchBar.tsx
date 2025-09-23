@@ -19,6 +19,7 @@ export default class SearchBar extends Component<Props> {
       ls.setLastSearch(query);
     }
 
+    ls.removeLastSearch();
     this.props.onSearch(query);
   };
   render() {

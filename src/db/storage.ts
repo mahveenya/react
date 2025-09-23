@@ -5,6 +5,9 @@ class Ls {
   setLastSearch(query: string) {
     localStorage.setItem('lastSearch', query);
   }
+  removeLastSearch() {
+    localStorage.removeItem('lastSearch');
+  }
 }
 
 export default new Ls();
