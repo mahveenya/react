@@ -7,7 +7,7 @@ import ls from './db/storage';
 import Loader from './components/Loader/Loader';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import type { Pokemon } from './types/types';
-import { isPokemon } from './utils/validators';
+import { toArray } from './utils/utils';
 
 type State = {
   pokemons: Pokemon[];
@@ -33,12 +33,7 @@ export default class App extends Component<State> {
 
     try {
       const response = await fetchFn();
-      // TODO: Create adapter to avoid such if-else statements
-      if (isPokemon(response)) {
-        this.setState({ pokemons: [response], loading: false });
-      } else {
-        this.setState({ pokemons: response, loading: false });
-      }
+      this.setState({ pokemons: toArray(response), loading: false });
     } catch (error) {
       this.setState({
         pokemons: [],
