@@ -6,19 +6,14 @@ import NothingToShow from '../NothingToShow/NothingToShow';
 import ErrorTrigger from '../ErrorTrigger/ErrorTrigger';
 import { isEmptyArray } from '~/utils/utils';
 
-type PokemonsState = {
-  pokemons: [IPokemon] | IPokemon[];
-};
-
 interface Props {
-  query: string;
   pokemons: [IPokemon] | IPokemon[];
   error: string | null;
 }
 
-export default class Pokemons extends Component<Props, PokemonsState> {
+export default class Pokemons extends Component<Props> {
   render() {
-    const { pokemons, query, error } = this.props;
+    const { pokemons, error } = this.props;
 
     if (error) {
       throw error;
@@ -35,8 +30,7 @@ export default class Pokemons extends Component<Props, PokemonsState> {
             })}
           </section>
         ) : (
-          // TODO: use as a fallback UI, show status code, error message, etc.
-          <NothingToShow query={query} />
+          <NothingToShow />
         )}
         <ErrorTrigger />
       </>

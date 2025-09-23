@@ -1,17 +1,11 @@
 import { Component } from 'react';
 import styles from './NothingToShow.module.css';
 
-export interface Props {
-  query: string;
-}
-
-export default class NothingToShow extends Component<Props> {
+export default class NothingToShow extends Component {
   render() {
-    const { query } = this.props;
-
     return (
       <section className={styles.nothingToShow}>
-        Nothing to show for <mark>{query}</mark>
+        Nothing to show
         <br />
         Try another pokemon name
       </section>

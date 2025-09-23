@@ -51,13 +51,9 @@ export default class App extends Component<State> {
 
   handleSearch = (query?: string) => {
     if (query) {
-      return this.fetchData(
-        () => {
-          return api.getPokemon(query);
-        },
-
-        query
-      );
+      return this.fetchData(() => {
+        return api.getPokemon(query);
+      }, query);
     }
 
     return this.fetchData(() => api.getPokemons());
@@ -71,11 +67,7 @@ export default class App extends Component<State> {
           <Loader />
         ) : (
           <ErrorBoundary>
-            <Pokemons
-              pokemons={this.state.pokemons}
-              query={this.state.query}
-              error={this.state.error}
-            />
+            <Pokemons pokemons={this.state.pokemons} error={this.state.error} />
           </ErrorBoundary>
         )}
       </>

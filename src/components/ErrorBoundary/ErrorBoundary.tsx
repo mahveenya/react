@@ -8,7 +8,7 @@ interface Props {
 
 interface State {
   hasError: boolean;
-  error: Error | null;
+  errorMessage: string | null;
   isFetchError: boolean;
   method: string | null;
   url: string | undefined;
@@ -18,7 +18,7 @@ interface State {
 export default class ErrorBoundary extends Component<Props, State> {
   state: State = {
     hasError: false,
-    error: null,
+    errorMessage: null,
     isFetchError: false,
     method: null,
     url: undefined,
@@ -30,7 +30,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    this.setState({ error: error });
+    this.setState({ errorMessage: error.message });
     if (error instanceof FetchError) {
       const { method, url } = error.request;
       const { status: statusCode } = error.response;
@@ -66,7 +66,7 @@ export default class ErrorBoundary extends Component<Props, State> {
               status code
             </p>
           ) : (
-            <p className={styles.errorBody}>{this.state.error?.message}</p>
+            <p className={styles.errorBody}>{this.state.errorMessage}</p>
           )}
         </div>
       );
