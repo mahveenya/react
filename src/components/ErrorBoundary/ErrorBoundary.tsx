@@ -1,6 +1,6 @@
 import { type ErrorInfo, type ReactNode, Component } from 'react';
 import styles from './ErrorBoundary.module.css';
-import { FetchError } from '~/api/api';
+import { FetchError } from '~/api/customErrors';
 
 interface Props {
   children: ReactNode;
