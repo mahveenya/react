@@ -13,27 +13,24 @@ import {
 } from '~/utils/validators';
 import type { Validator } from '~/types/helper.types';
 
-class FetchError extends Error {
-  status: number;
-  statusText: string;
-  body: unknown;
+export class FetchError extends Error {
+  response: Response;
   request: Request;
+  body: unknown;
 
   constructor(
     message: string,
     options: {
-      status: number;
-      statusText: string;
-      body: unknown;
+      response: Response;
       request: Request;
+      body: unknown;
     }
   ) {
     super(message);
     this.name = 'FetchError';
-    this.status = options.status;
-    this.statusText = options.statusText;
-    this.body = options.body;
+    this.response = options.response;
     this.request = options.request;
+    this.body = options.body;
   }
 }
 
@@ -45,8 +42,7 @@ class Api {
       if (response.status >= 400) {
         const errorBody = await this.safeParseJson(response);
         throw new FetchError('Request failed', {
-          status: response.status,
-          statusText: response.statusText,
+          response,
           body: errorBody,
           request,
         });

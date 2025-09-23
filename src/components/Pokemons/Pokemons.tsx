@@ -35,6 +35,7 @@ export default class Pokemons extends Component<Props, PokemonsState> {
             })}
           </section>
         ) : (
+          // TODO: use as a fallback UI, show status code, error message, etc.
           <NothingToShow query={query} />
         )}
         <ErrorTrigger />

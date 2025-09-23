@@ -33,20 +33,18 @@ export default class App extends Component<State> {
 
     try {
       const response = await fetchFn();
+      // TODO: Create adapter to avoid such if-else statements
       if (isPokemon(response)) {
         this.setState({ pokemons: [response], loading: false });
       } else {
         this.setState({ pokemons: response, loading: false });
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error occurred';
-
       this.setState({
         pokemons: [],
         query: query ?? this.state.query,
         loading: false,
-        error: errorMessage,
+        error: error,
       });
     }
   };

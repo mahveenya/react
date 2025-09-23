@@ -7,3 +7,16 @@
   border-radius: 5px;
   text-align: center;
 }
+
+.errorBody {
+  font-size: large;
+}
+
+.method,
+.statusCode {
+  font-weight: bold;
+}
+
+.url {
+  font-style: italic;
+}
