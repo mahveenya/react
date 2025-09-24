@@ -1,0 +1,13 @@
+.errorTrigger {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-color: aliceblue;
+  transition: all 0.25s;
+
+  &:hover {
+    cursor: pointer;
+    border-color: red;
+    color: red;
+  }
+}

@@ -1,0 +1,15 @@
+.nothingToShow {
+  text-align: center;
+  background-color: #1a1a1a;
+  font-size: 1.2em;
+  margin-top: 2em;
+  padding: 2em;
+  border-radius: 0.5em;
+  line-height: 4ch;
+
+  & mark {
+    color: aquamarine;
+    font-weight: 600;
+    background-color: inherit;
+  }
+}
