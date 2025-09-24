@@ -9,14 +9,16 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import type { Pokemon } from './types/types';
 import { toArray } from './utils/utils';
 
-type State = {
+interface State {
   pokemons: Pokemon[];
   query: string;
   loading: boolean;
-  error: string | null;
-};
+  error: Error | null;
+}
 
-export default class App extends Component<State> {
+type Props = Record<string, never>;
+
+export default class App extends Component<Props, State> {
   state: State = {
     pokemons: [],
     query: ls.getLastSearch() || '',
@@ -28,18 +30,27 @@ export default class App extends Component<State> {
     this.handleSearch(this.state.query);
   }
 
-  private fetchData = async <T,>(fetchFn: () => Promise<T>, query?: string) => {
+  private fetchData = async (
+    fetchFn: () => Promise<Pokemon | Pokemon[]>,
+    query?: string
+  ) => {
     this.setState({ loading: true, error: null });
 
     try {
       const response = await fetchFn();
-      this.setState({ pokemons: toArray(response), loading: false });
+      this.setState({
+        pokemons: toArray<Pokemon>(response),
+        loading: false,
+      });
     } catch (error) {
       this.setState({
         pokemons: [],
         query: query ?? this.state.query,
         loading: false,
-        error: error,
+        error:
+          error instanceof Error
+            ? error
+            : new Error(`Unexpected error: ${error}`),
       });
     }
   };

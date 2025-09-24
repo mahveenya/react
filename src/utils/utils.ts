@@ -1,7 +1,7 @@
 export const isEmptyArray = (array: unknown) =>
   Array.isArray(array) && array.length == 0;
 
-export const toArray = <T>(input: T) => {
+export function toArray<T>(input: T | T[]): T[] {
   if (!input) return [];
   return Array.isArray(input) ? input : [input];
-};
+}

@@ -8,7 +8,7 @@ import { isEmptyArray } from '~/utils/utils';
 
 interface Props {
   pokemons: [IPokemon] | IPokemon[];
-  error: string | null;
+  error: Error | null;
 }
 
 export default class Pokemons extends Component<Props> {
