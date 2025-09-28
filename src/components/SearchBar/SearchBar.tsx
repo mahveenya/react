@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import type { FormEvent } from 'react';
 import SearchInput from './SearchInput/SearchInput';
-import SearchButton from './SearchButton/SearchButton';
 import styles from './SearchBar.module.css';
 import ls from '../../db/storage';
 
@@ -26,7 +25,7 @@ export default class SearchBar extends Component<Props> {
     return (
       <form onSubmit={this.handleSubmit} className={styles.searchBar}>
         <SearchInput />
-        <SearchButton />
+        <button type="submit">Search</button>
       </form>
     );
   }
