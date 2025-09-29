@@ -16,9 +16,10 @@ export default class SearchBar extends Component<Props> {
     const query = formData.get('q')?.toString().trim();
     if (query) {
       ls.setLastSearch(query);
+    } else {
+      ls.removeLastSearch();
     }
 
-    ls.removeLastSearch();
     this.props.onSearch(query);
   };
   render() {
