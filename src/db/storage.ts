@@ -1,6 +1,6 @@
 class Ls {
   getLastSearch() {
-    return localStorage.getItem('lastSearch')?.trim();
+    return localStorage.getItem('lastSearch');
   }
   setLastSearch(query: string) {
     localStorage.setItem('lastSearch', query);

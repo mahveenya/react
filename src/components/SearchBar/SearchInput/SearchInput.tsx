@@ -4,7 +4,7 @@ import ls from '../../../db/storage';
 
 export default class SearchInput extends Component {
   state = {
-    query: ls.getLastSearch()?.trim() || '',
+    query: ls.getLastSearch() || '',
   };
 
   private handleChange = (event: ChangeEvent<HTMLInputElement>) => {
